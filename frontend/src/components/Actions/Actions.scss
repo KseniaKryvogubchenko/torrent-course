@@ -1,0 +1,24 @@
+.Actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.Upload, .Download {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 2rem;
+    margin-top: 1rem;
+    align-items: center;
+
+    input {
+        width: 20rem;
+        height: 2rem;
+    }
+
+    button {
+        height: 3rem;
+        width: 3rem;
+        font-size: 1.5rem;
+    }
+}
+

@@ -1,35 +1,51 @@
 import cn from 'classnames'
 import './Item.scss'
+import prettyBytes from 'pretty-bytes'
+import moment from 'moment'
 
 type cProps = {
+    item: any
     idx: number
-    selectedTorrent: any
-    setSelectedTorrent: any
+    selectedTorrent: { idx: number; type: string }
+    setSelectedTorrent: Function
 }
 
 const Item: React.FC<cProps> = ({
+    item,
     idx,
     selectedTorrent,
     setSelectedTorrent,
 }: cProps) => {
     const selectTorrent = () => {
         if (
-            selectedTorrent === -1 ||
-            (selectedTorrent !== -1 && selectedTorrent !== idx)
+            selectedTorrent.idx === -1 ||
+            (selectedTorrent.idx !== -1 && selectedTorrent.idx !== idx)
         ) {
-            setSelectedTorrent(idx)
+            setSelectedTorrent((prev: any) => ({ ...prev, idx }))
         } else {
-            setSelectedTorrent(-1)
+            setSelectedTorrent((prev: any) => ({ ...prev, idx: -1 }))
         }
     }
 
     return (
         <div
-            className={cn('Item', { selected: selectedTorrent === idx })}
+            className={cn('Item', { selected: selectedTorrent.idx === idx })}
             onClick={selectTorrent}
         >
-            test text (link) downloaded: 44444, time left: 55555, download
-            speed: 666655 gb/s
+            {`${item.name} downloaded: ${prettyBytes(
+                item.downloaded
+            )} uploaded: ${prettyBytes(item.uploaded)}, time left: ${
+                moment
+                    .duration(item.timeRemaining / 1000, 'seconds')
+                    .humanize()[0]
+                    .toUpperCase() +
+                moment
+                    .duration(item.timeRemaining / 1000, 'seconds')
+                    .humanize()
+                    .substring(1)
+            } download speed ${
+                prettyBytes(item.downloadSpeed) + '/s'
+            } upload speed ${prettyBytes(item.uploadSpeed) + '/s'}`}
         </div>
     )
 }

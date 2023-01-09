@@ -4,13 +4,17 @@ import Menu from './Menu/Menu'
 import './TorrentView.scss'
 
 type cProps = {
-    selectedTorrent: any
-    setSelectedTorrent: any
+    selectedTorrent: { idx: number; type: string }
+    setSelectedTorrent: Function
+    downloadingTor: any[]
+    uploadingTor: any[]
 }
 
 const TorrentView: React.FC<cProps> = ({
     selectedTorrent,
     setSelectedTorrent,
+    downloadingTor,
+    uploadingTor,
 }: cProps) => {
     const [activeFilter, setActiveFilter] = useState('all')
 
@@ -24,6 +28,8 @@ const TorrentView: React.FC<cProps> = ({
                 selectedTorrent={selectedTorrent}
                 setSelectedTorrent={setSelectedTorrent}
                 activeFilter={activeFilter}
+                downloadingTor={downloadingTor}
+                uploadingTor={uploadingTor}
             />
         </div>
     )

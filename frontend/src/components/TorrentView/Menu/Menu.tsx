@@ -3,7 +3,7 @@ import cn from 'classnames'
 
 type cProps = {
     activeFilter: string
-    setActiveFilter: any
+    setActiveFilter: Function
 }
 
 const Menu: React.FC<cProps> = ({ activeFilter, setActiveFilter }: cProps) => {

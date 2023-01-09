@@ -5,16 +5,30 @@ import Graph from './components/TorrentView/Graph/Graph'
 import TorrentView from './components/TorrentView/TorrentView'
 
 function App() {
-    const [selectedTorrent, setSelectedTorrent] = useState(-1)
+    const [downloadingTor, setDownloadingTor] = useState([])
+    const [uploadingTor, setUploadingTor] = useState([])
+    const [selectedTorrent, setSelectedTorrent] = useState({
+        idx: -1,
+        type: '',
+    })
 
     return (
         <div className="App">
-            <Actions />
+            <Actions
+                setDownloadingTor={setDownloadingTor}
+                setUploadingTor={setUploadingTor}
+            />
             <TorrentView
                 selectedTorrent={selectedTorrent}
                 setSelectedTorrent={setSelectedTorrent}
+                downloadingTor={downloadingTor}
+                uploadingTor={uploadingTor}
             />
-            <Graph selectedTorrent={selectedTorrent} />
+            <Graph
+                selectedTorrent={selectedTorrent}
+                uploadingTor={uploadingTor}
+                downloadingTor={downloadingTor}
+            />
         </div>
     )
 }

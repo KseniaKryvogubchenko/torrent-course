@@ -1,50 +1,52 @@
-import { useState } from 'react'
 import Item from './Item'
 import './Items.scss'
 
 type cProps = {
-    selectedTorrent: any
-    setSelectedTorrent: any
+    selectedTorrent: { idx: number; type: string }
+    setSelectedTorrent: Function
     activeFilter: string
+    downloadingTor: any[]
+    uploadingTor: any[]
 }
 
 const Items: React.FC<cProps> = ({
     selectedTorrent,
     setSelectedTorrent,
     activeFilter,
+    downloadingTor,
+    uploadingTor,
 }: cProps) => {
-    const [downloading, setDownloading] = useState(['1', '2', '3'])
-    const [uploading, setUploading] = useState(['4', '5'])
-
     return (
         <div className="Items">
             {activeFilter === 'download'
-                ? downloading.map((_item, idx) => (
+                ? downloadingTor.map((item, idx) => (
                       <Item
+                          item={item}
                           idx={idx}
                           selectedTorrent={selectedTorrent}
                           setSelectedTorrent={setSelectedTorrent}
-                          key={_item}
+                          key={idx}
                       />
                   ))
                 : activeFilter === 'upload'
-                ? uploading.map((_item, idx) => (
+                ? uploadingTor.map((item, idx) => (
                       <Item
+                          item={item}
                           idx={idx}
                           selectedTorrent={selectedTorrent}
                           setSelectedTorrent={setSelectedTorrent}
-                          key={_item}
+                          key={idx}
                       />
                   ))
-                : [...downloading, ...uploading].map((_item, idx) => (
+                : [...downloadingTor, ...uploadingTor].map((item, idx) => (
                       <Item
+                          item={item}
                           idx={idx}
                           selectedTorrent={selectedTorrent}
                           setSelectedTorrent={setSelectedTorrent}
-                          key={_item}
+                          key={idx}
                       />
                   ))}
-            {}
         </div>
     )
 }

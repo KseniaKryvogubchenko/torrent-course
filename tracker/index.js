@@ -48,11 +48,10 @@ server.on('listening', function () {
 // start tracker server listening! Use 0 to listen on a random free port.
 const port = 9696
 const hostname = 'localhost'
+
 server.listen(port, hostname, () => {
     // Do something on listening...
 })
-
-// listen for individual tracker messages from peers:
 
 server.on('start', function (addr) {
     console.log('got start message from ' + addr)
@@ -64,7 +63,7 @@ server.on('complete', function (addr) {
 })
 server.on('update', function (addr) {
     const a = addr
-
     console.log('update ' + a)
 })
+
 server.on('stop', function (addr) {})
