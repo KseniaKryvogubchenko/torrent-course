@@ -10,14 +10,6 @@ const Menu: React.FC<cProps> = ({ activeFilter, setActiveFilter }: cProps) => {
     return (
         <div className="Menu">
             <div
-                className={cn('Menu__All', {
-                    selected: activeFilter === 'all',
-                })}
-                onClick={() => setActiveFilter('all')}
-            >
-                All
-            </div>
-            <div
                 className={cn('Menu__Downloading', {
                     selected: activeFilter === 'download',
                 })}

@@ -2,7 +2,7 @@ import Item from './Item'
 import './Items.scss'
 
 type cProps = {
-    selectedTorrent: { idx: number; type: string }
+    selectedTorrent: { name: string; type: string }
     setSelectedTorrent: Function
     activeFilter: string
     downloadingTor: any[]
@@ -18,35 +18,29 @@ const Items: React.FC<cProps> = ({
 }: cProps) => {
     return (
         <div className="Items">
-            {activeFilter === 'download'
-                ? downloadingTor.map((item, idx) => (
-                      <Item
-                          item={item}
-                          idx={idx}
-                          selectedTorrent={selectedTorrent}
-                          setSelectedTorrent={setSelectedTorrent}
-                          key={idx}
-                      />
-                  ))
-                : activeFilter === 'upload'
-                ? uploadingTor.map((item, idx) => (
-                      <Item
-                          item={item}
-                          idx={idx}
-                          selectedTorrent={selectedTorrent}
-                          setSelectedTorrent={setSelectedTorrent}
-                          key={idx}
-                      />
-                  ))
-                : [...downloadingTor, ...uploadingTor].map((item, idx) => (
-                      <Item
-                          item={item}
-                          idx={idx}
-                          selectedTorrent={selectedTorrent}
-                          setSelectedTorrent={setSelectedTorrent}
-                          key={idx}
-                      />
-                  ))}
+            {activeFilter === 'download' ? (
+                downloadingTor.map((item, idx) => (
+                    <Item
+                        item={item}
+                        selectedTorrent={selectedTorrent}
+                        setSelectedTorrent={setSelectedTorrent}
+                        type="downloading"
+                        key={idx}
+                    />
+                ))
+            ) : activeFilter === 'upload' ? (
+                uploadingTor.map((item, idx) => (
+                    <Item
+                        item={item}
+                        selectedTorrent={selectedTorrent}
+                        setSelectedTorrent={setSelectedTorrent}
+                        type="uploading"
+                        key={idx}
+                    />
+                ))
+            ) : (
+                <></>
+            )}
         </div>
     )
 }

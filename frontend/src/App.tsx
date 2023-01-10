@@ -7,8 +7,9 @@ import TorrentView from './components/TorrentView/TorrentView'
 function App() {
     const [downloadingTor, setDownloadingTor] = useState([])
     const [uploadingTor, setUploadingTor] = useState([])
+
     const [selectedTorrent, setSelectedTorrent] = useState({
-        idx: -1,
+        name: '',
         type: '',
     })
 

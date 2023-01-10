@@ -4,8 +4,8 @@ import { seed, uploading } from '../../funcs/upload'
 import './Actions.scss'
 
 type cProps = {
-    setDownloadingTor: any
-    setUploadingTor: any
+    setDownloadingTor: Function
+    setUploadingTor: Function
 }
 
 const Actions: React.FC<cProps> = ({
@@ -31,7 +31,7 @@ const Actions: React.FC<cProps> = ({
     return (
         <div className="Actions">
             <div className="Upload">
-                Upload
+                Seed file
                 <input name="upload_file" type="file" />
                 <button onClick={seed}>OK</button>
             </div>

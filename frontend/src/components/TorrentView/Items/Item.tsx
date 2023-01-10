@@ -5,48 +5,62 @@ import moment from 'moment'
 
 type cProps = {
     item: any
-    idx: number
-    selectedTorrent: { idx: number; type: string }
+    selectedTorrent: { name: string; type: string }
     setSelectedTorrent: Function
+    type: string
 }
 
 const Item: React.FC<cProps> = ({
     item,
-    idx,
     selectedTorrent,
     setSelectedTorrent,
+    type,
 }: cProps) => {
     const selectTorrent = () => {
         if (
-            selectedTorrent.idx === -1 ||
-            (selectedTorrent.idx !== -1 && selectedTorrent.idx !== idx)
+            selectedTorrent.name === '' ||
+            (selectedTorrent.name !== '' &&
+                selectedTorrent.name !== item.name &&
+                selectedTorrent.type === type) ||
+            (selectedTorrent.name === item.name &&
+                selectedTorrent.type !== type)
         ) {
-            setSelectedTorrent((prev: any) => ({ ...prev, idx }))
+            setSelectedTorrent(() => ({
+                name: item.name,
+                type: type,
+            }))
         } else {
-            setSelectedTorrent((prev: any) => ({ ...prev, idx: -1 }))
+            setSelectedTorrent(() => ({ name: '', type: '' }))
         }
     }
 
     return (
         <div
-            className={cn('Item', { selected: selectedTorrent.idx === idx })}
+            className={cn('Item', {
+                selected:
+                    selectedTorrent.name === item.name &&
+                    selectedTorrent.type === type,
+            })}
             onClick={selectTorrent}
-        >
-            {`${item.name} downloaded: ${prettyBytes(
-                item.downloaded
-            )} uploaded: ${prettyBytes(item.uploaded)}, time left: ${
-                moment
-                    .duration(item.timeRemaining / 1000, 'seconds')
-                    .humanize()[0]
-                    .toUpperCase() +
-                moment
-                    .duration(item.timeRemaining / 1000, 'seconds')
-                    .humanize()
-                    .substring(1)
-            } download speed ${
-                prettyBytes(item.downloadSpeed) + '/s'
-            } upload speed ${prettyBytes(item.uploadSpeed) + '/s'}`}
-        </div>
+            dangerouslySetInnerHTML={{
+                __html:
+                    `<b>${item.name}</b> downloaded: ${prettyBytes(
+                        item.downloaded
+                    )} uploaded: ${prettyBytes(item.uploaded)}, time left: ${
+                        moment
+                            .duration(item.timeRemaining / 1000, 'seconds')
+                            .humanize()[0]
+                            .toUpperCase() +
+                        moment
+                            .duration(item.timeRemaining / 1000, 'seconds')
+                            .humanize()
+                            .substring(1)
+                    } download speed ${
+                        prettyBytes(item.downloadSpeed) + '/s'
+                    } upload speed ${prettyBytes(item.uploadSpeed) + '/s'}` +
+                    (item.done ? ' <b>DONE</b>' : ''),
+            }}
+        ></div>
     )
 }
 
