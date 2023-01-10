@@ -11,8 +11,10 @@ export const downloadTorrent = (magnetURI) => {
             downloading.push(torrent)
 
             torrent.on('done', (data) => {
-                torrent.files[0].getBuffer((err, buffer) => {
-                    fileDownload(buffer, torrent.files[0].name)
+                torrent.files.forEach((file) => {
+                    file.getBuffer((err, buffer) => {
+                        fileDownload(buffer, torrent.files[0].name)
+                    })
                 })
             })
         })
